@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
          Log.d("bsh", String.valueOf(i.get("bar")) );
 
          // Source an external script file
-         i.eval(new InputStreamReader(getAssets().open("scripts/test.js")));
+         i.eval(new InputStreamReader(getAssets().open("scripts/index.js")));
          Toast.makeText(this, String.valueOf(i.get("output")), Toast.LENGTH_LONG).show();
       } catch (Exception e) {
          Log.e("bsh", "error", e);
