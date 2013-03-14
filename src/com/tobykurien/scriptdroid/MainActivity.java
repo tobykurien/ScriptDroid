@@ -1,7 +1,6 @@
 package com.tobykurien.scriptdroid;
 
 import java.io.InputStreamReader;
-import java.util.Date;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,34 +9,39 @@ import android.view.Menu;
 import android.widget.Toast;
 import bsh.Interpreter;
 
+import com.tobykurien.scriptdroid.components.Alert;
+import com.tobykurien.scriptdroid.components.net.HttpRequest;
+
 public class MainActivity extends Activity {
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      //setContentView(R.layout.activity_main);
 
-      Interpreter i = new Interpreter();  // Construct an interpreter
+      Interpreter i = new Interpreter(); // Construct an interpreter
       try {
          i.set("activity", this);
          i.set("layout", new R.layout());
-         
-         i.set("foo", 5);                    // Set variables
-         i.set("date", new Date() ); 
+         i.set("id", new R.id());
+         i.set("http", new HttpRequest(this));
+         i.set("Alert", new Alert(this));
 
-         Date date = (Date)i.get("date");    // retrieve a variable
-
-         // Eval a statement and get the result
-         i.eval("bar = foo*10");             
-         Log.d("bsh", String.valueOf(i.get("bar")) );
+         // i.set("foo", 5); // Set variables
+         // i.set("date", new Date() );
+         //
+         // Date date = (Date)i.get("date"); // retrieve a variable
+         //
+         // // Eval a statement and get the result
+         // i.eval("bar = foo*10");
+         // Log.d("bsh", String.valueOf(i.get("bar")) );
 
          // Source an external script file
          i.eval(new InputStreamReader(getAssets().open("scripts/index.js")));
-         Toast.makeText(this, String.valueOf(i.get("output")), Toast.LENGTH_LONG).show();
+         //Toast.makeText(this, String.valueOf(i.get("output")), Toast.LENGTH_LONG).show();
       } catch (Exception e) {
          Log.e("bsh", "error", e);
-      }      
-      
+      }
+
    }
 
    @Override
